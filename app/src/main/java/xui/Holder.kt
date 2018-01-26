@@ -1,7 +1,6 @@
 package xui
 
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.util.SparseArray
 import android.view.View
 import android.widget.Button
@@ -11,7 +10,6 @@ import android.widget.RadioButton
 import android.widget.TextView
 
 
-import java.io.File
 import java.text.DecimalFormat
 import java.util.Date
 
@@ -20,7 +18,7 @@ import java.util.Date
  * Created by ma on 2015/7/10.
  * RecyclerView通用ViewHolder
  */
-class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
       val sparseArray: SparseArray< View>
 
     val convertView: View
@@ -68,101 +66,101 @@ class BaseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
 
-    fun setText(viewId: Int, value: String?): BaseViewHolder {
+    fun setText(viewId: Int, value: String?): Holder {
         getTextView(viewId).text = value ?: ""
-        return this@BaseViewHolder
+        return this@Holder
 
     }
 
-    fun setText(viewId: Int, value: Int): BaseViewHolder {
+    fun setText(viewId: Int, value: Int): Holder {
         getTextView(viewId).text = value.toString() + ""
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setText(viewId: Int, value: Float): BaseViewHolder {
+    fun setText(viewId: Int, value: Float): Holder {
 
         getTextView(viewId).text = DecimalFormat(".00").format(value.toDouble())
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setText(viewId: Int, value: Double): BaseViewHolder {
+    fun setText(viewId: Int, value: Double): Holder {
         getTextView(viewId).text = DecimalFormat(".00").format(value)
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setText(viewId: Int, value: Long): BaseViewHolder {
+    fun setText(viewId: Int, value: Long): Holder {
         getTextView(viewId).text = value.toString() + ""
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setText(viewId: Int, value: Date?): BaseViewHolder {
+    fun setText(viewId: Int, value: Date?): Holder {
         getTextView(viewId).text = value?.toString() ?: ""
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setChecked(viewId: Int, value: Boolean): BaseViewHolder {
+    fun setChecked(viewId: Int, value: Boolean): Holder {
         getCheckBox(viewId).isChecked = value
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setRadioChecked(viewId: Int, value: Boolean, text: String): BaseViewHolder {
+    fun setRadioChecked(viewId: Int, value: Boolean, text: String): Holder {
         getRiadioButton(viewId).isChecked = value
         getRiadioButton(viewId).text = text
-        return this@BaseViewHolder
+        return this@Holder
     }
 
 
-    fun setRadioChecked(viewId: Int, value: Boolean): BaseViewHolder {
+    fun setRadioChecked(viewId: Int, value: Boolean): Holder {
         getRiadioButton(viewId).isChecked = value
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setChecked(viewId: Int, value: Boolean, text: String): BaseViewHolder {
+    fun setChecked(viewId: Int, value: Boolean, text: String): Holder {
         getCheckBox(viewId).isChecked = value
         getCheckBox(viewId).text = text
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setBackgroundColor(viewId: Int, color: Int): BaseViewHolder {
+    fun setBackgroundColor(viewId: Int, color: Int): Holder {
         val view = getView<View>(viewId)
         view.setBackgroundColor(color)
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setBackgroundResource(viewId: Int, backgroundRes: Int): BaseViewHolder {
+    fun setBackgroundResource(viewId: Int, backgroundRes: Int): Holder {
         val view = getView<View>(viewId)
         view.setBackgroundResource(backgroundRes)
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setVisible(viewId: Int, visible: Boolean): BaseViewHolder {
+    fun setVisible(viewId: Int, visible: Boolean): Holder {
         val view = getView<View>(viewId)
         view.visibility = if (visible) View.VISIBLE else View.GONE
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setOnClickListener(viewId: Int, listener: View.OnClickListener): BaseViewHolder {
+    fun setOnClickListener(viewId: Int, listener: View.OnClickListener): Holder {
         val view = getView<View>(viewId)
         view.setOnClickListener(listener)
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setOnTouchListener(viewId: Int, listener: View.OnTouchListener): BaseViewHolder {
+    fun setOnTouchListener(viewId: Int, listener: View.OnTouchListener): Holder {
         val view = getView<View>(viewId)
         view.setOnTouchListener(listener)
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setOnLongClickListener(viewId: Int, listener: View.OnLongClickListener): BaseViewHolder {
+    fun setOnLongClickListener(viewId: Int, listener: View.OnLongClickListener): Holder {
         val view = getView<View>(viewId)
         view.setOnLongClickListener(listener)
-        return this@BaseViewHolder
+        return this@Holder
     }
 
-    fun setTag(viewId: Int, tag: Any): BaseViewHolder {
+    fun setTag(viewId: Int, tag: Any): Holder {
         val view = getView<View>(viewId)
         view.tag = tag
-        return this@BaseViewHolder
+        return this@Holder
     }
 
 

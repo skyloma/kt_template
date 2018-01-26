@@ -1,8 +1,11 @@
 package xui
 
 
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 
 
@@ -10,11 +13,11 @@ import android.view.ViewGroup
  * Created by ma on 2015/7/10.
  * RecyclerView通用数据绑定
  */
-class DataAdapter<T> @JvmOverloads constructor(  val layoutResId: Int,var onBinder: ((Holder, T, Int) -> Unit) ) : RecyclerView.Adapter<Holder>() {
+class VMAdapter<T> @JvmOverloads constructor(val vm: Int,val layoutId: Int   ) : RecyclerView.Adapter<VMAdapter.BindingHolder>() {
+
+
 
     var data: MutableList<T> = mutableListOf()
-
-
     fun lastItem(): T {
         return data[data.size - 1]
     }
@@ -65,25 +68,25 @@ class DataAdapter<T> @JvmOverloads constructor(  val layoutResId: Int,var onBind
 
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(layoutResId, viewGroup, false)
-        return Holder(view)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): BindingHolder {
+        val binding = DataBindingUtil.inflate<ViewDataBinding>(LayoutInflater.from(viewGroup.context), layoutId, viewGroup, false)
+        val holder = BindingHolder(binding!!.root)
+        holder.binding=binding
+        return holder
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: BindingHolder, position: Int) {
 
 
         if (itemClickDoing != null) {
             holder.itemView.isClickable = true
             holder.itemView.setOnClickListener { v -> itemClickDoing?.invoke(position) }
         }
-
-        onBinder.invoke(holder, getItem(position), position)
+        holder.binding?.setVariable(vm, data[position])
+        holder.binding?.executePendingBindings()
 
 
     }
-
-
 
 
 
@@ -94,5 +97,11 @@ class DataAdapter<T> @JvmOverloads constructor(  val layoutResId: Int,var onBind
     }
 
     private var itemClickDoing: ((Int) -> Unit)? = { i -> }
+
+
+    class BindingHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var binding: ViewDataBinding? = null
+    }
+
 
 }

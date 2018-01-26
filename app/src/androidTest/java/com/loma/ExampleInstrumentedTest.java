@@ -1,4 +1,4 @@
-package com.example.loma.myapplication;
+package com.loma;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,10 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.loma.myapplication", appContext.getPackageName());
+        assertEquals("com.ma", appContext.getPackageName());
+
+
+
+
     }
 }
