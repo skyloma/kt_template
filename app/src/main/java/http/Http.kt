@@ -3,9 +3,7 @@ package http
 
 import com.alibaba.fastjson.JSON
 import com.google.gson.Gson
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.operators.observable.ObservableCache
 import okhttp3.*
@@ -51,19 +49,20 @@ object Http {
 
     }
 
-    fun postJson(api: String, jsonObject: JSONObject): Single<Res> {
+    fun postJson(api: String, jsonObject: JSONObject): Flowable<Res> {
 
-        return Single.create<Res> {
+        return Flowable.create<Res>({
             val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
             val request = Request.Builder().url(Api.URL_ROOT + api).post(requestBody).build()
             val re = mClient.newCall(request).execute()
             if (re.isSuccessful) {
                 try {
-                     re.body()?.string()?.getObject<Res>()?.apply {
-                         it.onSuccess(this)
-                     }
+                    re.body()?.string()?.getObject<Res>()?.apply {
+                        it.onNext(this)
+                        it.onComplete()
+                    }
 
-                }catch (e:IOException){
+                } catch (e: IOException) {
                     it.onError(e)
                 }
 
@@ -72,21 +71,22 @@ object Http {
                 it.onError(Throwable("网络出错"))
             }
 
-        }.io_main()
+        }, BackpressureStrategy.BUFFER).io_main()
 
 
     }
 
-    inline fun <reified T : Any> getList(api: String, jsonObject: JSONObject): Single<List<T>>  {
+    inline fun <reified T : Any> getList(api: String, jsonObject: JSONObject): Flowable<List<T>> {
 
-        return Single.create<List<T>> {
+        return Flowable.create<List<T>> ({
             val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
             val request = Request.Builder().url(Api.URL_ROOT + api).post(requestBody).build()
 
             val re = mClient.newCall(request).execute()
             if (re.isSuccessful) {
-                 re.body()?.string()?.getObject<Res>() ?.Content?.getList<T>()?.apply {
-                    it.onSuccess(this)
+                re.body()?.string()?.getObject<Res>()?.Content?.getList<T>()?.apply {
+                    it.onNext(this)
+                    it.onComplete()
 
                 }
 
@@ -95,7 +95,7 @@ object Http {
                 it.onError(Throwable("网络出错"))
             }
 
-        }.io_main()
+        },BackpressureStrategy.BUFFER).io_main()
 
 
     }

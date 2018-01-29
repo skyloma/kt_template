@@ -18,11 +18,8 @@ import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.socks.library.KLog
 import com.squareup.picasso.Picasso
+import io.reactivex.*
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.ObservableTransformer
-import io.reactivex.Single
-import io.reactivex.SingleTransformer
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -194,6 +191,14 @@ fun ImageView.setFile(file: File?) {
         upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     })
 }
+
+fun <T> Flowable<T>.io_main(): Flowable<T> {
+
+    return compose(FlowableTransformer { upstream ->
+        upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    })
+}
+
 
 fun <T> Single<T>.io_main(): Single<T> {
 
