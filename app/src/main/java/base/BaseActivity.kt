@@ -22,11 +22,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.loma.R
-import com.socks.library.KLog
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.dialog_progress.view.*
 import xui.DelayedProgressDialog
-import xui.log
+
 
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -37,10 +36,9 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ActivityStack.add(this)
-        val mActionBar = supportActionBar
-        if (mActionBar != null) {
-            mActionBar.setDisplayHomeAsUpEnabled(true)
-            mActionBar.elevation = 0f
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+                     elevation = 0f
         }
 
 

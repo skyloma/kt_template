@@ -16,19 +16,19 @@ class RxTest{
     public  void flatMapTest(){
 
 
-              Observable.just(
-                    1,
-                    2,
-                    3)
-
-                    .flatMap(new Function<Integer, ObservableSource<String>>() {
-                        @Override
-                        public ObservableSource<String> apply(Integer s) throws Exception {
-                            return Observable.just(s+"");
-
-                        }
-                    })
-                    .subscribe(r -> {});
+//              Observable.just(
+//                    1,
+//                    2,
+//                    3)
+//
+//                    .flatMap(new Function<Integer, ObservableSource<String>>() {
+//                        @Override
+//                        public ObservableSource<String> apply(Integer s) throws Exception {
+//                            return Observable.just(s+"");
+//
+//                        }
+//                    })
+//                    .subscribe(r -> {});
 
 
 

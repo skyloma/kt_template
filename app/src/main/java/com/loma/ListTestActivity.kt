@@ -4,70 +4,71 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.loma.R
-import data.Project
+import db.UserInfo
 import kotlinx.android.synthetic.main.activity_list_test.*
 import xui.*
-import java.util.*
 
 class ListTestActivity : AppCompatActivity() {
 
-    lateinit var adapter: DataAdapter<Project>
+    lateinit var dataAdapter: DataAdapter<UserInfo>
     internal var i = 0
     lateinit var pager: Pager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_test)
-        adapter = DataAdapter<Project>(android.R.layout.simple_list_item_1, { h, s, i ->
 
-            s.apply {
-                h.setText(android.R.id.text1, id.toString())
-                h.setText(android.R.id.text1, name)
-                h.setText(android.R.id.text1, date?.getString10())
+        li.apply {
+            pager = Pager { loadMore() }
+            addOnScrollListener(pager)
+            setEmptyView( inflate(R.layout.empty ))
+            dataAdapter = DataAdapter<UserInfo>(android.R.layout.simple_list_item_1, { h, s, i ->
+                s.apply {
+                    //绑定数据
+                    h.setText(android.R.id.text1, h.toString())
+                }
 
+            }).apply {
+                itemClick { i ->
+                    //处理点击
+                }
             }
+            adapter = dataAdapter
 
-        }).apply {
-            itemClick { i -> toast(i) }
         }
 
 
-        pager = Pager { loadMore() }
-        li.addOnScrollListener(pager)
-        li.setEmptyView(layoutInflater.inflate(R.layout.empty, null))
-        li.adapter = adapter
     }
 
     private fun loadMore() {
         Log.e("zjt", "onScrollStateChanged" + i)
-        Project().let {
-            it.date = Date()
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
-            adapter.add(it)
+        UserInfo(0).let {
+
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
+            dataAdapter.add(it)
 
         }
 
-        if (adapter.itemCount > 50) {
-            pager.setHasMore(false)
+            if (dataAdapter.itemCount > 50) {
+                pager.setHasMore(false)
+            }
+
         }
 
+        fun add(view: View) {
+            UserInfo(0)?.let {
+
+                dataAdapter.add(it)
+
+
+            }
+
+        }
     }
-
-    fun add(view: View) {
-        Project().let {
-            it.date = Date()
-            adapter.add(it)
-
-
-        }
-
-    }
-}

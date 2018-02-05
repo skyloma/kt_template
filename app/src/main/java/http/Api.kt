@@ -6,6 +6,7 @@ object Api {
 
     val APPLogin = "/user/login"
     val findProjectById = "/project/id"
+    val findAllProject = "/project/list"
     val findMoudleByProjectId = "/moudle/projectId"
 }
 //

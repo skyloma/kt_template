@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import xui.DataAdapter
 
 class Li : android.support.v7.widget.RecyclerView {
     private var emptyView: View? = null
@@ -57,6 +58,16 @@ class Li : android.support.v7.widget.RecyclerView {
     }
 
     override fun setAdapter(adapter: RecyclerView.Adapter<*>?){
+        val oldAdapter = getAdapter()
+        oldAdapter?.unregisterAdapterDataObserver(observer)
+        super.setAdapter(adapter)
+        adapter?.registerAdapterDataObserver(observer)
+
+        checkIfEmpty()
+
+    }
+
+      fun setBinding(adapter: DataAdapter<*>?){
         val oldAdapter = getAdapter()
         oldAdapter?.unregisterAdapterDataObserver(observer)
         super.setAdapter(adapter)

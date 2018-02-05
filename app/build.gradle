@@ -1,9 +1,15 @@
+
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+
+
 android {
     compileSdkVersion 27
+
+
     dataBinding {
         enabled = true
     }
@@ -18,12 +24,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation":
-                                     "$projectDir/schemas".toString()]
-            }
-        }
+
     }
 
     buildTypes {
@@ -36,10 +37,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    sourceSets {
+        main {
+            main.java.srcDirs += 'src/main/kotlin'
+        }
     }
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
 }
 
 dependencies {
@@ -48,35 +55,39 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:design:27.0.2'
     implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'com.alibaba:fastjson:1.1.67.android'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //据库调试
+    debugImplementation "io.objectbox:objectbox-android-objectbrowser:$objectboxVersion"
+    releaseImplementation "io.objectbox:objectbox-android:$objectboxVersion"
+    kapt "io.objectbox:objectbox-processor:$objectboxVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     kapt "com.android.databinding:compiler:$compiler_version"
     annotationProcessor "com.android.databinding:compiler:$compiler_version"
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    //据库调试
-    debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
+
+
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-//    implementation 'io.reactivex.rxjava2:rxjava:2.1.7'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-kotlin:2.2.1'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:2.2.1'
-    implementation 'android.arch.lifecycle:runtime:1.0.0'
-    implementation 'android.arch.lifecycle:extensions:1.0.0'
-    implementation 'android.arch.persistence.room:runtime:1.0.0'
-    implementation 'android.arch.persistence.room:rxjava2:1.0.0'
-    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0'
-    kapt "android.arch.lifecycle:compiler:1.0.0"
-    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
-    kapt "android.arch.persistence.room:compiler:1.0.0"
+    implementation 'android.arch.lifecycle:runtime:1.1.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.0'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.1.0'
+    kapt "android.arch.lifecycle:compiler:1.1.0"
+
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     implementation 'com.squareup.picasso:picasso:2.5.2'
-
+    implementation "org.jetbrains.anko:anko-common:$anko_version"
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "com.github.lsxiao.Apollo:core:1.0.1-fix"
     kapt "com.github.lsxiao.Apollo:processor:1.0.1-fix"
-    implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
+//    implementation 'com.safframework.log:saf-log:1.5.1'
 }
-repositories {
-    mavenCentral()
-}
+
+// ObjectBox browser dependencies must be set before applying ObjectBox plugin so it does not add objectbox-android
+// (would result in two conflicting versions, e.g. "Duplicate files copied in APK lib/armeabi-v7a/libobjectbox.so").
+apply plugin: 'io.objectbox'
