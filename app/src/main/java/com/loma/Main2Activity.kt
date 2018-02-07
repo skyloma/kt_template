@@ -5,8 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import base.BaseActivity
+import com.safframework.log.log
 
 import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindUntilEvent
+import io.reactivex.Flowable
 
 import java.util.concurrent.TimeUnit
 
@@ -23,6 +25,13 @@ class Main2Activity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
+        Flowable.interval(2, 2, TimeUnit.SECONDS)
+                .bindUntilEvent(this@Main2Activity,Lifecycle.Event.ON_STOP)
+                .io_main()
+                .subscribeBy {
+                    it.log()
+//                    testview.text=it.toString()
+                }
 
 
         val countries = listOf("Russia", "USA", "England", "Australia")

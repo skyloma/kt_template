@@ -40,14 +40,16 @@ import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_main2.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.selector
+import org.jetbrains.anko.toast
 import org.json.JSONObject
 import xui.getObject
+import xui.toJson
 import xui.toast
 import java.util.concurrent.TimeUnit
 
 
 class MainActivity : BaseActivity() {
-    lateinit var disposables2Destroy: CompositeDisposable// 管理Destroy取消订阅者者
 
 
     var i = 0
@@ -55,24 +57,22 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        disposables2Destroy = CompositeDisposable()
+        fab.setOnClickListener { startActivity<Main2Activity>() }
 
-        Flowable.interval(2, 2, TimeUnit.SECONDS)
-                .bindUntilEvent(this@MainActivity,Lifecycle.Event.ON_DESTROY)
-                .io_main()
-                .subscribeBy {
-                             it.log()
-                  text.text=it.toString()
-                }
-
-
-        fab.setOnClickListener({
-
-            //     showMsg("ggggggggggggggggggggggggggggg")
-//          var intent1= Intent(this@MainActivity,ListTestActivity::class.java)
-//            startActivity(intent1)
-            startActivity<ListTestActivity>()
-
+        btLogin.setOnClickListener {
+            showLoading()
+            var j = JSONObject().put("username", "z").put("pwd", "123456")
+            Http.getObject< User>(Api.APPLogin, j).bindUntilEvent(this@MainActivity, Lifecycle.Event.ON_DESTROY).subscribeBy(onError = {
+                closeLoading() },
+                    onNext = {
+                 it log null
+//                val x=   getApp().db.boxFor< User>().put(it)
+//                x.log()
+            }, onComplete = {
+                closeLoading()
+            })
+        }
+        btPermission.setOnClickListener {
             RxPermissions(this).request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe({ granted ->
 
                 if (granted) {
@@ -83,61 +83,69 @@ class MainActivity : BaseActivity() {
                 }
             })
 
-            showLoading()
-            var j = JSONObject().put("username", "z").put("pwd","123456")
-            Http.postJson(Api.APPLogin, j)
-                    .flatMap {
-                        it.Content?.getObject<User>()?.id?.let {
-                            Http.getList<Project>(Api.findAllProject, JSONObject().put("id", it))
-                        }
-
-                    }
-                    .bindUntilEvent(this@MainActivity,Lifecycle.Event.ON_DESTROY)
-                    .subscribeBy(onError = { closeLoading() }, onNext = {it.log()} ,onComplete = {
-                       closeLoading()
-                    })
-//                 fab.visibility=View.GONE
+        }
+        btDbTest.setOnClickListener {
             doAsync {
 
                 var u = UserInfo()
                 //
 
                 val box = getApp().db.boxFor<UserInfo>()
-                box.put(u)
+                val j = box.put(u)
                 log(null)
 
                 runOnUiThread {
                     //更新UI
-
+                    toast(j)
                 }
             }
 
+        }
+        btLoadProject.setOnClickListener {
+            showLoading()
+            Http.getList<Project>(Api.findAllProject, JSONObject().put("id", it)).bindUntilEvent(this@MainActivity, Lifecycle.Event.ON_DESTROY).subscribeBy(onError = { it.log();closeLoading() }, onNext = {
+                doAsync {
 
-//                box.put(u).log()
-        })
+                    it.forEach {
+                        if (it.id==0L){it.id=2}
+                    }
 
-
-
-        val list = ArrayList<String>()
-
-
-    }
-
-    override fun onStop() {
-        disposables2Destroy.clear()
-        super.onStop()
+                    val box = getApp().db.boxFor<Project>()
+                    val x = box.put(it)
 
 
-    }
+                    runOnUiThread {
+                        //更新UI
+                        toast("项目插入$x")
+                        x.log()
+                    }
+                }
 
-    override fun onPause() {
-        super.onPause()
 
-    }
+            }, onComplete = {
+                closeLoading()
+            })
+        }
+        btRxjava.setOnClickListener {
+            showLoading()
+            var j = JSONObject().put("username", "z").put("pwd", "123456")
+            Http.postJson(Api.APPLogin, j).flatMap {
+                it.Content?.getObject<User>()?.id?.let {
+                    Http.getList<Project>(Api.findAllProject, JSONObject().put("id", it))
+                }
 
-    override fun onDestroy() {
-        super.onDestroy()
+            }.bindUntilEvent(this@MainActivity, Lifecycle.Event.ON_DESTROY).subscribeBy(onError = { closeLoading() }, onNext = { it.log() }, onComplete = {
+                closeLoading()
+            })
 
+        }
+        btSelect.setOnClickListener {
+
+            val countries = listOf("Russia", "USA", "England", "Australia")
+            selector("Where are you from?", countries) { ds, i ->
+                toast("So you're living in ${countries[i]}, right?")
+            }
+        }
 
     }
 

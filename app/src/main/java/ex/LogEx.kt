@@ -15,7 +15,7 @@ import ex.LoggerPrinter
             val s = getMethodNames1()
 
             if ( toString().contains("\n")) {
-                Log.d(t, String.format(s, toString().replace("\n".toRegex(), "\n║ ")))
+                Log.d(t, String.format(s, toString().replace("\n".toRegex(), "\n  ")))
             } else {
                 Log.d(t, String.format(s, toString()))
             }
@@ -34,7 +34,7 @@ infix fun Any.log(   tag: String? )   {
             val s = getMethodNames1()
 
             if ( toString().contains("\n")) {
-                Log.d(t, String.format(s, toString().replace("\n".toRegex(), "\n║ ")))
+                Log.d(t, String.format(s, toString().replace("\n".toRegex(), "\n  ")))
             } else {
                 Log.d(t, String.format(s, toString()))
             }
@@ -58,10 +58,10 @@ inline fun getMethodNames1(): String {
     builder.append(LoggerPrinter.TOP_BORDER).append(LoggerPrinter.BR)
 
     // 添加当前线程名
-    builder.append("║ " + "Thread: " + Thread.currentThread().name).append(LoggerPrinter.BR)
+    builder.append("  " + "Thread: " + Thread.currentThread().name).append(LoggerPrinter.BR)
             .append(LoggerPrinter.MIDDLE_BORDER).append(LoggerPrinter.BR)
             // 添加类名、方法名、行数
-            .append("║ ")
+            .append("  ")
             .append(sElements[stackOffset].className)
             .append(".")
             .append(sElements[stackOffset].methodName)
@@ -74,7 +74,7 @@ inline fun getMethodNames1(): String {
             .append(LoggerPrinter.BR)
             .append(LoggerPrinter.MIDDLE_BORDER).append(LoggerPrinter.BR)
             // 添加打印的日志信息
-            .append("║ ").append("%s").append(LoggerPrinter.BR)
+            .append("  ").append("%s").append(LoggerPrinter.BR)
             .append(LoggerPrinter.BOTTOM_BORDER).append(LoggerPrinter.BR)
 
     return builder.toString()

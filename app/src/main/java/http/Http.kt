@@ -70,6 +70,31 @@ object Http {
 
     }
 
+    inline fun <reified T : Any> getObject(api: String, jsonObject: JSONObject): Flowable<  T > {
+
+        return Flowable.create <T > ({
+            val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
+            val request = Request.Builder().url(Api.URL_ROOT + api).post(requestBody).build()
+
+            val re = mClient.newCall(request).execute()
+            if (re.isSuccessful) {
+                re.body()?.string()?.getObject<Res>()?.Content?.getObject  < T >()?.apply {
+
+                    it.onNext(this)
+                    it.onComplete()
+
+                }
+
+
+            } else {
+                it.onError(Throwable("网络出错"))
+            }
+
+        },BackpressureStrategy.BUFFER).io_main()
+
+
+    }
+
     inline fun <reified T : Any> getList(api: String, jsonObject: JSONObject): Flowable<List<T>> {
 
         return Flowable.create<List<T>> ({
@@ -78,7 +103,8 @@ object Http {
 
             val re = mClient.newCall(request).execute()
             if (re.isSuccessful) {
-                re.body()?.string()?.getObject<Res>()?.Content?.getList<T>()?.apply {
+                re.body()?.string()?.getObject<Res>()?.Content?.getList< T >()?.apply {
+
                     it.onNext(this)
                     it.onComplete()
 

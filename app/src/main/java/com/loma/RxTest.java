@@ -1,11 +1,5 @@
 package com.loma;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
-
 // Observable.range(2,5).subscribe(new Action1<Integer>() {
 //@Override
 //public void call(Integer integer) {
@@ -15,6 +9,7 @@ import io.reactivex.schedulers.Schedulers;
 class RxTest{
     public  void flatMapTest(){
 
+// 生成List<T> 中的 List<T>
 
 //              Observable.just(
 //                    1,

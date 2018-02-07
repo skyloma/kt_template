@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import db.UserInfo
 import kotlinx.android.synthetic.main.activity_list_test.*
+import org.jetbrains.anko.progressDialog
 import xui.*
 
 class ListTestActivity : AppCompatActivity() {
@@ -16,7 +17,7 @@ class ListTestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_test)
-
+//        progressDialog("正在加载","请稍等" )
         li.apply {
             pager = Pager { loadMore() }
             addOnScrollListener(pager)

@@ -11,10 +11,10 @@ object LoggerPrinter {
     /**
      * Drawing toolbox
      */
-    private val TOP_LEFT_CORNER = '╔'
-    private val BOTTOM_LEFT_CORNER = '╚'
-    private val MIDDLE_CORNER = '╟'
-    private val HORIZONTAL_DOUBLE_LINE = '║'
+    private val TOP_LEFT_CORNER = ""
+    private val BOTTOM_LEFT_CORNER = ""
+    private val MIDDLE_CORNER = ""
+    private val HORIZONTAL_DOUBLE_LINE = ""
     private val DOUBLE_DIVIDER = "═════════════════════════════════════════════════"
     private val SINGLE_DIVIDER = "─────────────────────────────────────────────────"
     val TOP_BORDER = TOP_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER
