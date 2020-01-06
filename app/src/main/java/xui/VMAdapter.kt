@@ -82,7 +82,7 @@ class VMAdapter<T> @JvmOverloads constructor(val vm: Int,val layoutId: Int   ) :
             holder.itemView.isClickable = true
             holder.itemView.setOnClickListener { v -> itemClickDoing?.invoke(position) }
         }
-        holder.binding?.setVariable(vm, data[position])
+        holder.binding?.setVariable(vm, data.get(position))
         holder.binding?.executePendingBindings()
 
 

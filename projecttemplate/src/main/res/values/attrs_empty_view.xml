@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="TempView">
+        <attr name="tempTip" format="string" />
+        <attr name="tempTipIcon" format="color|reference" />
+    </declare-styleable>
+</resources>

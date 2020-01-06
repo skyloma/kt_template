@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="moudle"
+            type="com.loma.project.model.Moudle">
+
+        </variable>
+        <import type="android.text.Html"/>
+    </data>
+    <android.support.v7.widget.CardView
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+
+        app:cardCornerRadius="0dp"
+        app:contentPadding="@dimen/dp8"
+        android:elevation="5dp"
+
+        android:layout_marginVertical="@dimen/dp8"
+        android:layout_marginHorizontal="@dimen/dp16"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:orientation="vertical">
+
+
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/num"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin"
+                    android:text="@{moudle.num}" />
+
+
+                <TextView
+
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin"
+                    android:text="@{moudle.name}" />
+            </LinearLayout>
+
+            <View
+                android:background="@color/primary_text"
+                android:layout_width="match_parent"
+                android:layout_height="1px"/>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin"
+                android:text="@{Html.fromHtml(moudle.description)}" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/workhours"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin"
+                    android:text="@{String.valueOf(moudle.workhours)}" />
+
+                <!--<TextView-->
+                    <!--android:id="@+id/project_code_version"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:padding="@dimen/margin"-->
+                    <!--android:text="@{String.valueOf(moudle.project_code_version)}" />-->
+
+            </LinearLayout>
+
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/androidRes"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.androidRes}" />-->
+
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/iosTestState"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.iosTestState}" />-->
+
+
+
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/pcTestState"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.pcTestState}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/del"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.del}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/iosRes"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.iosRes}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/androidTestState"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.androidTestState}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/pcUI"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.pcUI}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/pcRes"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.pcRes}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/design_id"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.design_id}" />-->
+
+
+
+
+
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/iosUI"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.iosUI}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/id"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.id}" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/api"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/margin"-->
+            <!--android:text="@{moudle.api}" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_marginTop="@dimen/dp8"
+                    android:text="查看"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:layout_marginTop="@dimen/dp8"
+                    android:text="删除"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:layout_marginTop="@dimen/dp8"
+                    android:text="编辑"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:layout_marginTop="@dimen/dp8"
+                    android:text="提交"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</layout>

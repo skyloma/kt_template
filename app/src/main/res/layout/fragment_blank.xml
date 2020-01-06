@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="base.BlankFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
+
+    <!--<xui.TempView-->
+        <!--android:id="@+id/tempView"-->
+        <!--app:tempTip="@string/hello_blank_fragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <!--</xui.TempView>-->
+
+    <Button
+        android:id="@+id/shownull"
+        android:layout_width="wrap_content"
+        android:text="show null"
+        android:layout_height="wrap_content" />
+
+</FrameLayout>

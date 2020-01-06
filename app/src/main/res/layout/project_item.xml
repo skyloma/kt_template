@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="project"
+            type="com.loma.project.model.Project"/>
+         <import type="android.view.View"/>
+    </data>
+    <android.support.v7.widget.CardView
+        android:layout_marginVertical="@dimen/dp8"
+        android:layout_marginHorizontal="@dimen/dp16"
+
+        app:contentPadding="@dimen/dp8"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+    <LinearLayout
+         android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+
+
+        <ImageView
+            android:layout_margin ="@dimen/dp8"
+
+
+            android:src="@mipmap/wu_shu_ju"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+
+                    android:text="@{project.name}"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+
+                    android:text="@{project.vesion}"
+                    android:textSize="12sp"
+                    android:textColor="@color/secondary_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+
+                    android:text="@{project.progress==0 ? @string/deploying : @string/deployed}"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                 android:paddingBottom="@dimen/dp8"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="40dp">
+
+                <ImageView
+                    android:layout_marginVertical="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:src="@drawable/android"
+                    android:visibility="@{project.android ? View.VISIBLE : View.GONE}"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp" />
+                <ImageView
+                    android:layout_margin="@dimen/dp8"
+                    android:src="@drawable/ios"
+                    android:visibility="@{project.ios ? View.VISIBLE : View.GONE }"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp" />
+
+                <ImageView
+
+                    android:layout_margin="@dimen/dp8"
+                    android:src="@drawable/pc"
+                    android:visibility="@{project.pc ? View.VISIBLE : View.GONE}"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp" />
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textSize="12sp"
+                    android:text="两天前发布"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:text="详情"
+                    android:onClick="@{project.read }"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+             </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+
+</layout>

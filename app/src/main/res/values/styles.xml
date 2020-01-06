@@ -17,4 +17,37 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="bt_danger">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button.Inverse
+        </item>
+        <item name="android:background">@color/colorDanger</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="bt_accent">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button.Inverse
+        </item>
+        <item name="android:background">@color/colorAccent</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="bt_primary">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button.Inverse
+        </item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="bt_white">
+        <item name="android:textColor">@android:color/secondary_text_light</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+
 </resources>

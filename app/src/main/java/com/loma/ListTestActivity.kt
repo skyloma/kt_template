@@ -4,9 +4,14 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.loma.home.HomeActivity
+import com.loma.home.MActivity
+import com.safframework.log.log
 import db.UserInfo
+import kotlinx.android.synthetic.main.activity_home.view.*
 import kotlinx.android.synthetic.main.activity_list_test.*
 import org.jetbrains.anko.progressDialog
+import org.jetbrains.anko.startActivity
 import xui.*
 
 class ListTestActivity : AppCompatActivity() {
@@ -21,27 +26,33 @@ class ListTestActivity : AppCompatActivity() {
         li.apply {
             pager = Pager { loadMore() }
             addOnScrollListener(pager)
-            setEmptyView( inflate(R.layout.empty ))
             dataAdapter = DataAdapter<UserInfo>(android.R.layout.simple_list_item_1, { h, s, i ->
                 s.apply {
                     //绑定数据
-                    h.setText(android.R.id.text1, h.toString())
+                    h.setText(android.R.id.text1, s.toString())
                 }
 
             }).apply {
                 itemClick { i ->
                     //处理点击
+                    startActivity<MActivity>()
                 }
             }
-            adapter = dataAdapter
+            setAdapter (dataAdapter)
 
         }
+        i.log()
+        "onCreate" log "zjt"
 
 
     }
 
     private fun loadMore() {
-        Log.e("zjt", "onScrollStateChanged" + i)
+
+
+        10.log()
+        10.log()
+
         UserInfo(0).let {
 
             dataAdapter.add(it)

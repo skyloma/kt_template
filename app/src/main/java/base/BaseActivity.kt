@@ -17,15 +17,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import com.loma.R
-import io.reactivex.disposables.CompositeDisposable
-import kotlinx.android.synthetic.main.dialog_progress.view.*
-import xui.DelayedProgressDialog
-
 
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -38,7 +29,8 @@ abstract class BaseActivity : AppCompatActivity() {
         ActivityStack.add(this)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-                     elevation = 0f
+
+            elevation = 0f
         }
 
 
@@ -86,6 +78,16 @@ abstract class BaseActivity : AppCompatActivity() {
         builder.setMessage(msg)
         builder.setNegativeButton(android.R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
         builder.setPositiveButton(android.R.string.ok, onClickListener)
+        builder.show()
+
+
+    }
+    fun showDialog(msg: String ) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("提示信息")
+        builder.setMessage(msg)
+        builder.setNegativeButton(android.R.string.cancel) { dialogInterface, i -> dialogInterface.dismiss() }
+        builder.setPositiveButton(android.R.string.ok  ){ dialogInterface, i -> dialogInterface.dismiss()}
         builder.show()
 
 

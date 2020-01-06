@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/kt_template.iml" filepath="$PROJECT_DIR$/kt_template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projecttemplate/projecttemplate.iml" filepath="$PROJECT_DIR$/projecttemplate/projecttemplate.iml" />
     </modules>
   </component>
 </project>

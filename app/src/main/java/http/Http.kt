@@ -1,12 +1,18 @@
 package http
 
 
+import db.User
 import io.reactivex.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.*
 import org.json.JSONObject
+import org.reactivestreams.Subscriber
 import xui.getList
 import xui.getObject
+import xui.toJson
 import java.io.IOException
+import java.net.ConnectException
 
 
 import java.util.concurrent.TimeUnit
@@ -23,102 +29,92 @@ object Http {
             .build()
 
 
-    fun post(api: String, jsonObject: JSONObject): Res? {
 
 
-        val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
-        val request = Request.Builder().url(Api.URL_ROOT + api).post(requestBody).build()
-        var re = mClient.newCall(request).execute()
-        if (re.isSuccessful) {
-            return re.body()?.string()?.getObject<Res>()
-
-        } else {
-
-            val res = Res()
-            res.Code = -1
-            res.Msg = re.message()
-            return res
-        }
-
-
-    }
-
-    fun postJson(api: String, jsonObject: JSONObject): Flowable<Res> {
-
-        return Flowable.create<Res>({
-            val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
+    inline  fun <reified T: Any > returnPojo(api: String, jsonObject: Any): Single<T> {
+        return Single.create<T>({
+            val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toJson())
             val request = Request.Builder().url(Api.URL_ROOT + api).post(requestBody).build()
             val re = mClient.newCall(request).execute()
             if (re.isSuccessful) {
-                try {
-                    re.body()?.string()?.getObject<Res>()?.apply {
-                        it.onNext(this)
-                        it.onComplete()
+                val res = re.body()?.string()
+                val json = JSONObject(res)
+                when (json.getInt("Code")) {
+                    0 -> {
+                        val jo= json.get("Content").toString()
+                        val a= jo.getObject <T>()
+                        it.onSuccess(a)
                     }
-
-                } catch (e: IOException) {
-                    it.onError(e)
+                    else -> {
+                        throw Throwable("${json.getString("Msg")}")
+                    }
                 }
-
 
             } else {
                 it.onError(Throwable("网络出错"))
             }
 
-        }, BackpressureStrategy.BUFFER).io_main()
+        }).io_main()
 
 
     }
 
-    inline fun <reified T : Any> getObject(api: String, jsonObject: JSONObject): Flowable<  T > {
+    inline fun <reified T : Any> returnList(api: String, jsonObject: Any): Single<List<T>> {
 
-        return Flowable.create <T > ({
-            val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
+        return Single.create<List<T>>({
+            val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toJson())
             val request = Request.Builder().url(Api.URL_ROOT + api).post(requestBody).build()
 
             val re = mClient.newCall(request).execute()
             if (re.isSuccessful) {
-                re.body()?.string()?.getObject<Res>()?.Content?.getObject  < T >()?.apply {
+                val res = re.body()?.string()
+                val json = JSONObject(res)
+                when (json.getInt("Code")) {
+                    0 -> {
+                        val jo= json.get("Content").toString()
+                        val data= jo.getList<T>()
 
-                    it.onNext(this)
-                    it.onComplete()
-
+                      it.onSuccess(data!! )
+                    }
+                    else -> {
+                        throw Throwable("${json.getString("Msg")}")
+                    }
                 }
-
 
             } else {
                 it.onError(Throwable("网络出错"))
             }
 
-        },BackpressureStrategy.BUFFER).io_main()
+        })
+
+                .io_main()
 
 
     }
 
-    inline fun <reified T : Any> getList(api: String, jsonObject: JSONObject): Flowable<List<T>> {
 
-        return Flowable.create<List<T>> ({
-            val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toString())
+    inline fun   test(api: String, jsonObject: Any): Single<String> {
+
+        return Single.create<String>({
+            val requestBody = RequestBody.create(MEDIA_TYPE_JSON, jsonObject.toJson())
             val request = Request.Builder().url(Api.URL_ROOT + api).post(requestBody).build()
 
             val re = mClient.newCall(request).execute()
             if (re.isSuccessful) {
-                re.body()?.string()?.getObject<Res>()?.Content?.getList< T >()?.apply {
-
-                    it.onNext(this)
-                    it.onComplete()
-
-                }
-
+                val res = re.body()!!.string()
+                it.onSuccess(res )
 
             } else {
                 it.onError(Throwable("网络出错"))
             }
 
-        },BackpressureStrategy.BUFFER).io_main()
+        })
+
+                .io_main()
 
 
     }
+
 
 
 //    fun postForm(api: String, parms: String, map: Map<String, Any>, files: List<File>): Observable<Res> {
@@ -237,39 +233,6 @@ object Http {
 //    }
 
 
-//    fun test(api: String, `object`: Any): Observable<String> {
-//        return Observable.create(object : Observable.OnSubscribe<String>() {
-//            fun call(subscribe: Subscriber<in String>) {
-//                try {
-//                    val requestBody = RequestBody.create(MEDIA_TYPE_JSON, JsonUtil.toJson(`object`))
-//                    val request = Request.Builder().url(Api.getUrlRoot() + api).post(requestBody).build()
-//                    val call = getClient().newCall(request)
-//                    val response = call.execute()
-//
-//                    if (!subscribe.isUnsubscribed()) {
-//                        if (response.isSuccessful()) {
-//                            val string = response.body().string()
-//                            Log.d(TAG, string)
-//                            subscribe.onNext(string)
-//                            subscribe.onCompleted()
-//                        }
-//                    }
-//                } catch (ex: ConnectException) {
-//                    if (!subscribe.isUnsubscribed()) {
-//                        subscribe.onError(ex)
-//                    }
-//                } catch (e: IOException) {
-//                    if (!subscribe.isUnsubscribed()) {
-//                        subscribe.onError(e)
-//                    }
-//
-//                }
-//
-//            }
-//        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-//
-//
-//    }
 
 
 //    private fun dataObservable(api: String, `object`: Any): Observable<Res> {

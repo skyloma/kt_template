@@ -13,7 +13,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import java.io.BufferedOutputStream
 import java.io.File
